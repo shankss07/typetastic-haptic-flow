@@ -4,10 +4,18 @@ import React, { useEffect, useState } from 'react';
 interface TimerProps {
   isRunning: boolean;
   onTimeUpdate: (seconds: number) => void;
+  resetTimer?: boolean;
 }
 
-const Timer: React.FC<TimerProps> = ({ isRunning, onTimeUpdate }) => {
+const Timer: React.FC<TimerProps> = ({ isRunning, onTimeUpdate, resetTimer = false }) => {
   const [seconds, setSeconds] = useState(0);
+  
+  // Effect to handle timer reset
+  useEffect(() => {
+    if (resetTimer) {
+      setSeconds(0);
+    }
+  }, [resetTimer]);
   
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;

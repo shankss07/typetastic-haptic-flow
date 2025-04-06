@@ -18,6 +18,7 @@ const Index = () => {
   const [incorrectKeys, setIncorrectKeys] = useState<Set<string>>(new Set());
   const [showResults, setShowResults] = useState(false);
   const [stats, setStats] = useState({ wpm: 0, accuracy: 0, time: 0, wordsTyped: 0 });
+  const [resetTimer, setResetTimer] = useState(false);
   
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -68,6 +69,11 @@ const Index = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     
+    // Start timer if this is the first character
+    if (value.length === 1 && userInput.length === 0) {
+      setIsTimerRunning(true);
+    }
+    
     // Update user input
     setUserInput(value);
     setCurrentIndex(value.length);
@@ -115,6 +121,9 @@ const Index = () => {
     setCorrectKeys(new Set());
     setIncorrectKeys(new Set());
     setPressedKeys(new Set());
+    
+    // Reset timer 
+    setResetTimer(prev => !prev);
     
     // Focus on input field
     if (inputRef.current) {
@@ -165,7 +174,7 @@ const Index = () => {
         <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 text-transparent bg-clip-text">
           TypeTastic
         </h1>
-        <Timer isRunning={isTimerRunning} onTimeUpdate={handleTimeUpdate} />
+        <Timer isRunning={isTimerRunning} onTimeUpdate={handleTimeUpdate} resetTimer={resetTimer} />
       </div>
       
       {/* Typing text area */}
