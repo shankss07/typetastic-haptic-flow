@@ -5,47 +5,6 @@
 
 @layer base {
   :root {
-    --background: 250 95% 98%;
-    --foreground: 250 10% 15%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 250 10% 15%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 250 10% 15%;
-
-    --primary: 250 95% 65%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 250 20% 95%;
-    --secondary-foreground: 250 10% 15%;
-
-    --muted: 250 10% 90%;
-    --muted-foreground: 250 5% 45%;
-
-    --accent: 250 95% 90%;
-    --accent-foreground: 250 10% 15%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 250 20% 85%;
-    --input: 250 20% 85%;
-    --ring: 250 95% 65%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
     --background: 250 10% 10%;
     --foreground: 250 10% 95%;
 
@@ -73,12 +32,23 @@
     --border: 250 10% 25%;
     --input: 250 10% 25%;
     --ring: 250 95% 65%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border selection:bg-primary/30 selection:text-primary-foreground;
   }
 
   body {
@@ -92,7 +62,7 @@
 
   .key {
     @apply relative flex items-center justify-center select-none
-           bg-secondary text-foreground rounded-md shadow-sm
+           bg-secondary text-foreground rounded-md shadow-md
            transition-all duration-100 ease-in-out;
     min-width: 2rem;
     height: 3rem;
@@ -128,6 +98,30 @@
   .text-untyped {
     @apply text-typing-untyped;
   }
+
+  .glass-effect {
+    @apply backdrop-blur-sm bg-card/30 border border-white/10;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-violet-400 text-transparent bg-clip-text;
+  }
+
+  .bg-gradient-dark {
+    @apply bg-gradient-to-b from-background to-secondary/40;
+  }
+}
+
+@keyframes key-press {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 10px rgba(139, 92, 246, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.6); }
+  100% { box-shadow: 0 0 10px rgba(139, 92, 246, 0.3); }
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');

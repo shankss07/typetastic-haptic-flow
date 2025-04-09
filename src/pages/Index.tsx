@@ -160,7 +160,7 @@ const Index = () => {
 
   return (
     <div 
-      className="min-h-screen flex flex-col items-center py-8 px-4 gap-6 cursor-text"
+      className="min-h-screen flex flex-col items-center py-8 px-4 gap-6 cursor-text bg-gradient-to-b from-background to-secondary/40"
       onClick={focusInput}
     >
       {/* Hidden input field to capture typing */}
@@ -175,14 +175,14 @@ const Index = () => {
       
       {/* Header with logo and timer */}
       <div className="w-full max-w-4xl flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 text-transparent bg-clip-text">
-          TypeTastic
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-violet-400 text-transparent bg-clip-text">
+          Typewist
         </h1>
         <Timer isRunning={isTimerRunning} onTimeUpdate={handleTimeUpdate} resetTimer={resetTimer} />
       </div>
       
       {/* Typing text area */}
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-4xl p-6 bg-card/50 backdrop-blur-sm rounded-lg shadow-lg border border-border/30">
         <TypingText 
           text={currentText} 
           userInput={userInput}
@@ -191,17 +191,19 @@ const Index = () => {
       </div>
       
       {/* Visual keyboard */}
-      <KeyboardLayout 
-        pressedKeys={pressedKeys}
-        currentKey={currentText[currentIndex]}
-        correctKeys={correctKeys}
-        incorrectKeys={incorrectKeys}
-      />
+      <div className="w-full max-w-4xl mt-4">
+        <KeyboardLayout 
+          pressedKeys={pressedKeys}
+          currentKey={currentText[currentIndex]}
+          correctKeys={correctKeys}
+          incorrectKeys={incorrectKeys}
+        />
+      </div>
       
       {/* Restart button */}
       <button 
         onClick={resetTyping}
-        className="mt-6 px-6 py-2 bg-primary text-primary-foreground rounded-md shadow hover:bg-primary/90 transition-colors"
+        className="mt-8 px-8 py-2.5 bg-primary text-primary-foreground rounded-full shadow-lg hover:bg-primary/80 transition-colors"
       >
         New Paragraph
       </button>
