@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-
+import "@/index.css"
 interface TypingTextProps {
   text: string;
   userInput: string;
