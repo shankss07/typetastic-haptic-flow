@@ -30,12 +30,12 @@ export const calculateStats = (
   userInput: string, 
   timeInSeconds: number
 ) => {
-  // Word count (standard definition: 5 characters = 1 word)
-  const wordsTyped = originalText.length / 5;
+  // Count actual words in the text (standard way: words separated by spaces)
+  const words = originalText.trim().split(/\s+/).length;
   
-  // Words per minute
+  // Words per minute calculation
   const minutes = timeInSeconds / 60;
-  const wpm = wordsTyped / minutes;
+  const wpm = words / minutes;
   
   // Accuracy
   let correctChars = 0;
@@ -53,7 +53,7 @@ export const calculateStats = (
     wpm,
     accuracy,
     time: timeInSeconds,
-    wordsTyped: Math.round(wordsTyped)
+    wordsTyped: words
   };
 };
 

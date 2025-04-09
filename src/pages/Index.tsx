@@ -19,6 +19,7 @@ const Index = () => {
   const [showResults, setShowResults] = useState(false);
   const [stats, setStats] = useState({ wpm: 0, accuracy: 0, time: 0, wordsTyped: 0 });
   const [resetTimer, setResetTimer] = useState(false);
+  const [hasErrors, setHasErrors] = useState(false);
   
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -31,10 +32,6 @@ const Index = () => {
 
   // Handle key press events for the visual keyboard
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (!isTimerRunning && currentIndex === 0) {
-      setIsTimerRunning(true);
-    }
-    
     setPressedKeys(prev => new Set([...prev, e.key.toLowerCase()]));
     
     // Play keystroke sound
@@ -44,7 +41,7 @@ const Index = () => {
     if (navigator.vibrate) {
       navigator.vibrate(10);
     }
-  }, [isTimerRunning, currentIndex]);
+  }, []);
 
   const handleKeyUp = useCallback((e: KeyboardEvent) => {
     setPressedKeys(prev => {
@@ -98,15 +95,21 @@ const Index = () => {
           updated.delete(lastChar);
           return updated;
         });
+        setHasErrors(true);
       }
     }
     
-    // Check if typing is completed
+    // Check if typing is completed and all characters are correct
     if (value.length === currentText.length) {
-      setIsTimerRunning(false);
-      const typingStats = calculateStats(currentText, value, time);
-      setStats(typingStats);
-      setShowResults(true);
+      // Check if the entire input matches the expected text
+      const isCompleteMatch = value === currentText;
+      
+      if (isCompleteMatch) {
+        setIsTimerRunning(false);
+        const typingStats = calculateStats(currentText, value, time);
+        setStats(typingStats);
+        setShowResults(true);
+      }
     }
   };
 
@@ -121,6 +124,7 @@ const Index = () => {
     setCorrectKeys(new Set());
     setIncorrectKeys(new Set());
     setPressedKeys(new Set());
+    setHasErrors(false);
     
     // Reset timer 
     setResetTimer(prev => !prev);
